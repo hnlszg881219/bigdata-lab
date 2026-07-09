@@ -1,0 +1,90 @@
+
+services:
+
+  mysql:
+
+    image: mysql:8.0
+
+    container_name: hive-mysql
+
+    environment:
+
+      MYSQL_ROOT_PASSWORD: root
+
+      MYSQL_DATABASE: metastore
+
+
+    ports:
+
+      - "3306:3306"
+
+
+    volumes:
+
+      - mysql-data:/var/lib/mysql
+
+
+
+  metastore:
+
+    image: apache/hive:3.1.3
+
+    container_name: hive-metastore
+
+
+    depends_on:
+
+      - mysql
+
+
+    environment:
+
+      SERVICE_NAME: metastore
+
+
+    ports:
+
+      - "9083:9083"
+
+
+    volumes:
+
+      - ./hive/hive-site.xml:/opt/hive/conf/hive-site.xml
+
+      - ./hive/lib/mysql-connector-j.jar:/opt/hive/lib/mysql-connector-j.jar
+
+
+
+  hiveserver2:
+
+    image: apache/hive:3.1.3
+
+    container_name: hive-server2
+
+
+    depends_on:
+
+      - metastore
+
+
+    environment:
+
+      SERVICE_NAME: hiveserver2
+
+
+    ports:
+
+      - "10000:10000"
+
+
+    volumes:
+
+      - ./hive/hive-site.xml:/opt/hive/conf/hive-site.xml
+
+      - ./hive/lib/mysql-connector-j.jar:/opt/hive/lib/mysql-connector-j.jar
+
+
+
+volumes:
+
+  mysql-data:

@@ -1,0 +1,42 @@
+# IDE
+.idea/
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# Environment
+.env
+
+# Hadoop
+hadoop/data/
+hadoop/logs/
+*.pid
+
+# Spark
+spark/metastore_db/
+spark/derby.log
+spark/spark-warehouse/
+spark/checkpoint/
+spark/logs/
+
+# Flink
+flink/log/
+flink/checkpoint/
+flink/savepoint/
+
+# Hive
+hive/metastore/
+hive/logs/
+
+# Docker
+docker-compose.override.yml
+
+# OS
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~

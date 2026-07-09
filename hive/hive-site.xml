@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+
+<configuration>
+
+
+<!-- MySQL Metastore -->
+
+<property>
+    <name>javax.jdo.option.ConnectionURL</name>
+
+    <value>
+    jdbc:mysql://mysql:3306/metastore?createDatabaseIfNotExist=true
+    </value>
+
+</property>
+
+
+<property>
+
+    <name>javax.jdo.option.ConnectionDriverName</name>
+
+    <value>
+    com.mysql.cj.jdbc.Driver
+    </value>
+
+</property>
+
+
+<property>
+
+    <name>javax.jdo.option.ConnectionUserName</name>
+
+    <value>
+    root
+    </value>
+
+</property>
+
+
+<property>
+
+    <name>javax.jdo.option.ConnectionPassword</name>
+
+    <value>
+    root
+    </value>
+
+</property>
+
+
+<!-- Metastore地址 -->
+
+<property>
+
+    <name>hive.metastore.uris</name>
+
+    <value>
+    thrift://hive-metastore:9083
+    </value>
+
+</property>
+
+
+</configuration>
