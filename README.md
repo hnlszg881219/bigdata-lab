@@ -72,7 +72,7 @@ beeline
 create database demo;
 use demo;
 
-create table user(
+create table users(
     id int,
     name string
 );
