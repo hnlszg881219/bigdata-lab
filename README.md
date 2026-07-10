@@ -65,7 +65,7 @@ docker logs hive-server2
 使用 Beeline
 docker exec -it hive-server2 bash
 beeline
-!connect jdbc:hive2://localhost:10000
+!connect jdbc:hive2://localhost:10000/;auth=noSasl
 
 
 创建第一张 Hive 表
