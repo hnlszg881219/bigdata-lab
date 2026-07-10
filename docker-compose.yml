@@ -63,7 +63,7 @@ services:
 
       - ./hive/hive-site.xml:/opt/hive/conf/hive-site.xml
 
-      - ./hive/lib/mysql-connector-j.jar:/opt/hive/lib/mysql-connector-j.jar
+      - ./hive/lib/mysql-connector-j-8.0.33.jar:/opt/hive/lib/mysql-connector-j.jar
 
       - warehouse-data:/opt/hive/warehouse
 
@@ -107,7 +107,7 @@ services:
 
       - ./hive/hive-site.xml:/opt/hive/conf/hive-site.xml
 
-      - ./hive/lib/mysql-connector-j.jar:/opt/hive/lib/mysql-connector-j.jar
+      - ./hive/lib/mysql-connector-j-8.0.33.jar:/opt/hive/lib/mysql-connector-j.jar
 
       - warehouse-data:/opt/hive/warehouse
 
