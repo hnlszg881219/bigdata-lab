@@ -97,6 +97,12 @@ select * from TBLS;
 | 文件路径 | MySQL   |
 | 真实数据 | HDFS/S3 |
 
+本地模式有很多坑
+1 /tmp/hive 权限（755 → 1777）——Hive 的 scratch 目录必须全局可写
+2 Docker 网络名带下划线（bigdata_default → hive-net）——导致 metastore URI 反解析出的 hostname 不合法
+3 beeline 客户端没走 auth=noSasl ——服务端配的是 NOSASL 认证模式，客户端连接串也得显式声明
+能用hdfs就用它了
+
 
 
 
