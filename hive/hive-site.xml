@@ -1,64 +1,113 @@
 <?xml version="1.0"?>
-
 <configuration>
 
-
 <!-- MySQL Metastore -->
-
 <property>
     <name>javax.jdo.option.ConnectionURL</name>
-
-    <value>
-    jdbc:mysql://mysql:3306/metastore?createDatabaseIfNotExist=true
-    </value>
-
+    <value>jdbc:mysql://mysql:3306/metastore?createDatabaseIfNotExist=true</value>
 </property>
 
-
 <property>
-
     <name>javax.jdo.option.ConnectionDriverName</name>
-
-    <value>
-    com.mysql.cj.jdbc.Driver
-    </value>
-
+    <value>com.mysql.cj.jdbc.Driver</value>
 </property>
 
-
 <property>
-
     <name>javax.jdo.option.ConnectionUserName</name>
-
-    <value>
-    root
-    </value>
-
+    <value>root</value>
 </property>
-
 
 <property>
-
     <name>javax.jdo.option.ConnectionPassword</name>
-
-    <value>
-    root
-    </value>
-
+    <value>root</value>
 </property>
 
+<!-- 本地临时目录（绕过 HDFS） -->
+<property>
+    <name>hive.exec.scratchdir</name>
+    <value>/tmp/hive</value>
+</property>
+
+<property>
+    <name>hive.exec.local.scratchdir</name>
+    <value>/tmp/hive</value>
+</property>
+
+<property>
+    <name>hive.querylog.location</name>
+    <value>/tmp/hive</value>
+</property>
+
+<!-- 本地 Warehouse（无 HDFS） -->
+<property>
+    <name>hive.metastore.warehouse.dir</name>
+    <value>file:///opt/hive/warehouse</value>
+</property>
+
+<!-- 本地文件系统 + 本地执行引擎 -->
+<property>
+    <name>fs.defaultFS</name>
+    <value>file:///</value>
+</property>
+
+<property>
+    <name>mapreduce.framework.name</name>
+    <value>local</value>
+</property>
+
+<!-- HiveServer2 Thrift 配置 -->
+<property>
+    <name>hive.server2.transport.mode</name>
+    <value>binary</value>
+</property>
+
+<property>
+    <name>hive.server2.thrift.port</name>
+    <value>10000</value>
+</property>
+
+<property>
+    <name>hive.server2.thrift.bind.host</name>
+    <value>0.0.0.0</value>
+</property>
+
+<!-- 禁用 WebUI 和动态服务发现 -->
+<property>
+    <name>hive.server2.webui.port</name>
+    <value>0</value>
+</property>
+
+<property>
+    <name>hive.server2.support.dynamic.service.discovery</name>
+    <value>false</value>
+</property>
+
+<!-- HiveServer2 简单认证（无 Kerberos） -->
+<property>
+    <name>hive.server2.authentication</name>
+    <value>NOSASL</value>
+</property>
+
+<property>
+    <name>hive.server2.enable.doAs</name>
+    <value>false</value>
+</property>
+
+<!-- Hive 3.x 静默失败修复 -->
+<property>
+    <name>hive.metastore.schema.verification</name>
+    <value>false</value>
+</property>
+
+<property>
+    <name>hive.metastore.event.db.notification.api.auth</name>
+    <value>false</value>
+</property>
 
 <!-- Metastore地址 -->
-
 <property>
-
     <name>hive.metastore.uris</name>
-
-    <value>
-    thrift://hive-metastore:9083
-    </value>
-
+    <value>thrift://hive-metastore:9083</value>
 </property>
-
 
 </configuration>
