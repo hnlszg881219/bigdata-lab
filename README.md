@@ -1,3 +1,30 @@
+OLTP 数据
+KV 存储
+
+OLAP数据
+数据仓库
+
+单条数据的处理逻辑
+1. 分层削峰：让"高频小写入"和"批量分析"彻底解耦
+   ODS 层
+       业务系统产生的原始数据（订单、点击、日志），走 Kafka 这种真正为高频小消息设计的系统承接，不直接怼进 Hive
+   DWD/DWS 层
+       定时（比如每 15 分钟、每小时、每天）批量把 Kafka 里攒的数据，通过 Spark/Flink 批处理任务，一次性算好、整批写入 Hive/Iceberg
+   ADS层
+3. Lambda / Kappa 架构：实时和离线分两条腿走路
+   Lambda 架构:
+           同一份数据，一条线走流处理（Flink 实时算,写入 Redis/HBase/ClickHouse 这种支持高频写的存储,服务实时查询需求）,另一条线走批处理（定时算入 Hive/Iceberg,服务离线分析）。缺点是两套逻辑要维护两遍，容易口径不一致。
+   Kappa 架构
+           干脆只留流处理这一条线，用 Flink 做实时计算,把结果直接写到能承受高频更新的存储（现在很流行直接写 Iceberg/Hudi，靠它们的增量写入能力吸收高频变更）
+4. CDC（Change Data Capture）：把"单条更新"转换成"批量增量"
+    生产库（MySQL/PostgreSQL） -> Debezium/Flink CDC 之类工具，捕获数据库的 binlog -> 批量写入Iceberg/Hudi 这类支持高效 upsert 的表格式里
+5. 冷热分层：用不同存储承接不同时效性要求
+   需要毫秒级单条查询/写入的场景（比如用户实时画像、风控），用 Redis/HBase/MySQL,压根不碰 Hive/Iceberg 这类为批处理优化的存储
+   需要复杂聚合分析、跑几十亿行的场景，才落到 Hive/Spark/Iceberg 这类系统
+   中间还有 ClickHouse/Doris 这类 OLAP 引擎，专门优化"准实时写入 + 秒级聚合查询"，填补两者之间的空白地带
+
+
+
 第 1 篇：MySQL + Hive Metastore（理解元数据）
 目标
 跑通 Hive Metastore，并理解 Hive 的“表”到底存在哪里。
